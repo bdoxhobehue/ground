@@ -14,9 +14,9 @@ class Ground:
         self.url = url
 
 
-def finddistance(origin, destination):
+def find_distance(origin, destination):
     KEY = "AIzaSyBSJywKPIK1ONXOByLvjPHeqvNhIFd6Cu4"
-    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origin+"&destinations="+destination+"&mode=walking&language=EN&key="+KEY
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin + "&destinations=" + destination + "&mode=walking&language=EN&key=" + KEY
     response = requests.get(url)
     json = response.json()
     return int(json['rows'][0]['elements'][0]['distance']['value'])
@@ -36,11 +36,14 @@ for i in range(last_page):
     for j in range(clear_data.__len__()):
         irr.append(Ground(clear_data[j].text, clear_data[j]['href']))
 
+print(time.time() - timeStart)
+timeStart=time.time()
+
 for i in irr:
     new_request = requests.get(i.url)
     soup = BeautifulSoup(new_request.content, 'html.parser')
     i.cost = soup.findAll('div', {'class': 'productPage__price js-contentPrice'})[0]['content']
-    i.description = soup.findAll('div', {'class': 'productPage__descriptionText js-productPageDescription'})[0].text
+    i.description = soup.findAll('p', {'class': 'productPage__descriptionText js-productPageDescription'})[0].text
     for j in range(clear_data.__len__()):
         irr.append(Ground(clear_data[j].text, clear_data[j]['href']))
 
