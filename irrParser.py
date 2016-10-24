@@ -14,6 +14,13 @@ class Ground:
         self.url = url
 
 
+def finddistance(origin, destination):
+    KEY = "AIzaSyBSJywKPIK1ONXOByLvjPHeqvNhIFd6Cu4"
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origin+"&destinations="+destination+"&mode=walking&language=EN&key="+KEY
+    response = requests.get(url)
+    json = response.json()
+    return int(json['rows'][0]['elements'][0]['distance']['value'])
+
 
 timeStart = time.time();
 url = 'http://kazan.irr.ru/real-estate/out-of-town/lands/'
@@ -38,6 +45,6 @@ for i in irr:
         irr.append(Ground(clear_data[j].text, clear_data[j]['href']))
 
 for i in irr:
-    print(i.name + " " + i.url + " " + str(i.cost)+ " " + i.description)
+    print(i.name + " " + i.url + " " + str(i.cost) + " " + i.description)
 
 print(time.time() - timeStart)
