@@ -37,7 +37,7 @@ for i in range(last_page):
         irr.append(Ground(clear_data[j].text, clear_data[j]['href']))
 
 print(time.time() - timeStart)
-timeStart=time.time()
+timeStart = time.time()
 
 for i in irr:
     new_request = requests.get(i.url)
