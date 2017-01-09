@@ -2,6 +2,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 import codecs
+import csv
 
 
 class Ground:
@@ -61,8 +62,10 @@ for i in baseOfProposals:
 
 print("Time elapsed: {:.4} ".format(time.time() - timeStart))
 
-with codecs.open("output.txt", 'w', 'UTF-8') as outputfile:
+with open("output.csv", 'w', newline='', encoding='utf-8' ) as csvfile:
     counter = 0
-    for i in baseOfProposals:
-        counter = counter + 1
-        outputfile.write("{4} Name: {0}  URL: {1} Cost: {2} Description:{3} \n".format(i.name, i.url, str(i.cost), i.description, counter))
+    writer = csv.writer(csvfile)
+    writer.writerows(baseOfProposals)
+    # for i in baseOfProposals:
+    #     counter = counter + 1
+    #     csvfile.write("){4} Name: {0}  URL: {1} Cost: {2} Description:{3} \n".format(i.name, i.url, str(i.cost), i.description, counter)
